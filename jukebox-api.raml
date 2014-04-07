@@ -88,6 +88,56 @@ version: v1
                 required: true
                 type: file
   post:
+    description: |
+      Add a new song to Jukebox.
+
+      The song needs to be created for the `/songs/{songId}/file-content` to exist.
+      You can use this second resource to get and post the file to reproduce.
+    queryParameters:
+      access_token:
+        description: "The access token provided by the authentication application"
+        example: AABBCCDD
+        required: true
+        type: string
+    body:
+      application/json:
+          schema: |
+            {
+              "type": "object",
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "id": "http://jsonschema.net",
+              "required": true,
+              "properties": {
+                "songId": {
+                  "type": "string",
+                  "required": true,
+                  "minLength": 36,
+                  "maxLength": 36
+                },
+                "songTitle": {
+                  "type": "string",
+                  "required": true
+                },
+                "albumId": {
+                  "type": "string",
+                  "required": true,
+                  "minLength": 36,
+                  "maxLength": 36
+                }
+              }
+            }
+          example: |
+            {
+              "songId": "550e8400-e29b-41d4-a716-446655440000",
+              "songTitle": "Get Lucky",
+              "albumId": "183100e3-0e2b-4404-a716-66104d440550"
+            }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              { "message": "The song has been properly entered" }
 /artists:
   description: Collection of artists loaded in Jukebox
   get:
@@ -254,6 +304,41 @@ version: v1
                     }]
   post:
     description: Add a new Artist to Jukebox
+    body:
+      application/json:
+        example: |
+          {
+            "artistName": "Daft Punk",
+            "description": "French electronic music duo consisting of musicians Guy-Manuel de Homem-Christo and Thomas Bangalter",
+            "imageURL": "http://travelhymns.com/wp-content/uploads/2013/06/random-access-memories1.jpg"
+          }
+        schema: |
+          {
+            "type": "object",
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "id": "http://jsonschema.net",
+            "required":false,
+            "properties": {
+              "artistName": {
+                "type": "string",
+                "required":true
+              },
+              "description": {
+                "type": "string",
+                "required": false
+              },
+              "imageURL": {
+                "type": "string",
+                "required": false
+              }
+            }
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              { "message": "The artist has been added." }
 /albums:
   description: Collection of albums existing in Jukebox
   get:
@@ -373,3 +458,57 @@ version: v1
                   ]
   post:
     description: Add a new Album to Jukebox
+    body:
+      application/json:
+        example: |
+          {
+                  "albumId": "183100e3-0e2b-4404-a716-66104d440550",
+                  "albumName": "Random Access Memories",
+                  "year": "2013",
+                  "imageURL": "http://upload.wikimedia.org/wikipedia/en/a/a7/Random_Access_Memories.jpg",
+                  "genreCode": "ELE",
+                  "artistId": "110e8300-e32b-41d4-a716-664400445500"
+          }
+        schema: |
+          {
+            "type": "object",
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "id": "http://jsonschema.net",
+            "required":false,
+            "properties": {
+              "albumId": {
+                "type": "string",
+                "required":true,
+                "minLength": 36,
+                "maxLength": 36
+              },
+              "albumName": {
+                "type": "string",
+                "required": true
+              },
+              "year": {
+                "type": "string",
+                "required": false
+              },
+              "iamgeURL": {
+                "type": "string",
+                "required": false
+              },
+              "genreCode": {
+                "type": "string",
+                "required": true
+              },
+              "artistId": {
+                "type": "string",
+                "required":true,
+                "minLength": 36,
+                "maxLength": 36
+              }
+            }
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              { "message": "The artist has been added." }
