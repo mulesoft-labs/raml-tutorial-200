@@ -94,6 +94,16 @@ schemas:
     }
 
 resourceTypes:
+  - readOnlyCollection:
+      description: Collection of available <<resourcePathName>> in Jukebox.
+      get:
+        description: Get a list of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  <<exampleCollection>>
   - collection:
       description: Collection of available <<resourcePathName>> in Jukebox.
       get:
@@ -206,9 +216,8 @@ resourceTypes:
         exampleItem: !include jukebox-include-artist-retrieve.sample
     /albums:
       type:
-        collection:
-          exampleCollection: !include jukebox-include-artist-albums.sample
-          exampleItem: {}
+        readOnlyCollection:
+          exampleCollection: !include jukebox-include-album-songs.sample
       description: Collection of albulms belonging to the artist
       get:
         description: Get a specific artist's albums list
@@ -232,8 +241,7 @@ resourceTypes:
         exampleItem: !include jukebox-include-album-retrieve.sample
     /songs:
       type:
-        collection:
+        readOnlyCollection:
           exampleCollection: !include jukebox-include-album-songs.sample
-          exampleItem: {}
       get:
         description: Get the list of songs for the album with `albumId = {albumId}`
