@@ -150,18 +150,21 @@ resourceTypes:
               application/json:
                 example: |
                   {"message": "<<resourcePathName|!singularize>> not found" }
+traits:
+  - searchable:
+      queryParameters:
+        query:
+          description: |
+            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] <<description>>
+          example: |
+            <<example>>
 /songs:
   type:
     collection:
       exampleCollection: !include jukebox-include-songs.sample
       exampleItem: !include jukebox-include-song-new.sample
   get:
-    queryParameters:
-        query:
-          description: |
-            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] with valid searchable fields: songTitle
-          example: |
-            ["songTitle", "Get L", "like"]
+    is: [searchable: {description: "with valid searchable fields: songTitle", example: "[\"songTitle\", \"Get L\", \"like\"]"}]
   /{songId}:
     type:
       collection-item:
@@ -199,12 +202,7 @@ resourceTypes:
       exampleCollection: !include jukebox-include-artists.sample
       exampleItem: !include jukebox-include-artist-new.sample
   get:
-    queryParameters:
-        query:
-          description: |
-            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] with valid searchable fields: countryCode
-          example: |
-            ["countryCode", "FRA", "equals"]
+    is: [searchable: {description: "with valid searchable fields: countryCode", example: "[\"countryCode\", \"FRA\", \"equals\"]"}]
   /{artistId}:
     type:
       collection-item:
@@ -222,12 +220,7 @@ resourceTypes:
       exampleCollection: !include jukebox-include-albums.sample
       exampleItem: !include jukebox-include-album-new.sample
   get:
-    queryParameters:
-        query:
-          description: |
-            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] with valid searchable fields: genreCode
-          example: |
-            ["genreCode", "ELE\", "like"]
+    is: [searchable: {description: "with valid searchable fields: genreCode", example: "[\"genreCode\", \"ELE\", \"like\"]"}]
   /{albumId}:
     type:
       collection-item:
