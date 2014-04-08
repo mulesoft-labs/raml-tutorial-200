@@ -104,6 +104,7 @@ resourceTypes:
                   <<exampleCollection>>
   - collection:
       description: Collection of available <<resourcePathName>> in Jukebox.
+      is: [securized]
       get:
         description: Get a list of <<resourcePathName>>.
         responses:
@@ -115,12 +116,6 @@ resourceTypes:
       post:
         description: |
           Add a new <<resourcePathName|!singularize>> to Jukebox.
-        queryParameters:
-          access_token:
-            description: "The access token provided by the authentication application"
-            example: AABBCCDD
-            required: true
-            type: string
         body:
           application/json:
             schema: <<resourcePathName|!singularize>>
@@ -184,6 +179,13 @@ traits:
           required: false
           example: 80
           default: 10
+  - securized:
+      queryParameters:
+          access_token:
+            description: "The access token provided by the authentication application"
+            example: AABBCCDDEE
+            required: true
+            type: string
 /songs:
   type:
     collection:
@@ -258,7 +260,7 @@ traits:
     is: [
           searchable: {description: "with valid searchable fields: genreCode", example: "[\"genreCode\", \"ELE\", \"equals\"]"},
           orderable: {fieldsList: "albumName, genre"},
-
+          pageable
         ]
   /{albumId}:
     type:
