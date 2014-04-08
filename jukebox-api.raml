@@ -93,15 +93,37 @@ schemas:
 
 resourceTypes:
   - collection:
+      description: Collection of available <<resourcePathName>> in Jukebox.
       get:
+        description: Get a list of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
       post:
+        description: |
+          Add a new <<resourcePathName|!singularize>> to Jukebox.
+        queryParameters:
+          access_token:
+            description: "The access token provided by the authentication application"
+            example: AABBCCDD
+            required: true
+            type: string
+        body:
+          application/json:
+            schema: <<resourcePathName|!singularize>>
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  { "message": "The <<resourcePathName|!singularize>> has been properly entered" }
   - collection-item:
       get:
 
 /songs:
-  description: Collection of available songs in Jukebox
+  type: collection
   get:
-    description: Get a list of songs based on the song title.
     queryParameters:
       songTitle:
         description: "The title of the song to search (it is case insensitive and doesn't need to match the whole title)"
@@ -171,6 +193,9 @@ resourceTypes:
         description: |
            Enters the file content for an existing song entity.
 
+           The song needs to be created for the `/songs/{songId}/file-content` to exist.
+           You can use this second resource to get and post the file to reproduce.
+
            Use the "binary/octet-stream" content type to specify the content from any consumer (excepting web-browsers).
            Use the "multipart-form/data" content type to upload a file which content will become the file-content
         body:
@@ -182,32 +207,14 @@ resourceTypes:
                 required: true
                 type: file
   post:
-    description: |
-      Add a new song to Jukebox.
-
-      The song needs to be created for the `/songs/{songId}/file-content` to exist.
-      You can use this second resource to get and post the file to reproduce.
-    queryParameters:
-      access_token:
-        description: "The access token provided by the authentication application"
-        example: AABBCCDD
-        required: true
-        type: string
     body:
       application/json:
-          schema: song
           example: |
             {
               "songId": "550e8400-e29b-41d4-a716-446655440000",
               "songTitle": "Get Lucky",
               "albumId": "183100e3-0e2b-4404-a716-66104d440550"
             }
-    responses:
-      200:
-        body:
-          application/json:
-            example: |
-              { "message": "The song has been properly entered" }
 /artists:
   description: Collection of artists loaded in Jukebox
   get:
