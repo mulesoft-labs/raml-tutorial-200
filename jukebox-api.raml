@@ -4,6 +4,8 @@ title: Jukebox API
 baseUri: http://jukebox.api.com
 version: v1
 
+
+
 schemas:
  - song: |
     {
@@ -119,8 +121,21 @@ resourceTypes:
                 example: |
                   { "message": "The <<resourcePathName|!singularize>> has been properly entered" }
   - collection-item:
+      description: Entity representing a <<resourcePathName|!singularize>>
       get:
-
+        description: |
+          Get the <<resourcePathName|!singularize>>
+          with <<resourcePathName|!singularize>>Id =
+          {<<resourcePathName|!singularize>>Id}
+        responses:
+          200:
+            body:
+              application/json:
+          404:
+            body:
+              application/json:
+                example: |
+                  {"message": "<<resourcePathName|!singularize>> not found" }
 /songs:
   type: collection
   get:
@@ -151,9 +166,8 @@ resourceTypes:
                   }
                   ]
   /{songId}:
-    description: Song entity
+    type: collection-item
     get:
-      description: Get the song with `songId = {songId}`
       responses:
         200:
           body:
@@ -174,11 +188,6 @@ resourceTypes:
                     "imageURL": "http://upload.wikimedia.org/wikipedia/en/a/a7/Random_Access_Memories.jpg"
                   }
                 }
-        404:
-          body:
-            application/json:
-              example: |
-                {"message": "Song not found"}
     /file-content:
       description: The file to be reproduced by the client
       get:
