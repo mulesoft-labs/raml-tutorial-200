@@ -42,7 +42,7 @@ version: v1
         200:
           body:
             application/json:
-              example: |
+              example: | 
                 {
                   "songId": "550e8400-e29b-41d4-a716-446655440000",
                   "songTitle": "Get Lucky",
@@ -64,12 +64,29 @@ version: v1
               example: |
                 {"message": "Song not found"}
     /file-content:
-      description: The file to be reproduced by the client
+      description: The file to be reproduced by the client 
       get:
         description: Get the file content
         responses:
           200:
+            body:
+              binary/octet-stream:
+                example: 
+                  !include heybulldog.mp3
       post:
+        description: |
+           Enters the file content for an existing song entity.
+           
+           Use the "binary/octet-stream" content type to specify the content from any consumer (excepting web-browsers).
+           Use the "multipart-form/data" content type to upload a file which content will become the file-content
+        body: 
+          binary/octet-stream:
+          multipart/form-data:
+            formParameters: 
+              file:
+                description: The file to be uploaded
+                required: true
+                type: file
   post:
 /artists:
   description: Collection of artists loaded in Jukebox
@@ -87,7 +104,7 @@ version: v1
       200:
         body:
           application/json:
-            example: |
+            example: | 
               [{
                 "artistId": "110e8300-e32b-41d4-a716-664400445500",
                 "artistName": "Daft Punk",
@@ -119,7 +136,7 @@ version: v1
                 }
               },
               ]
-
+          
   /{artistId}:
     description: Artist entity
     get:
@@ -128,7 +145,7 @@ version: v1
         200:
           body:
             application/json:
-              example: |
+              example: | 
                 {
                   "artistId": "110e8300-e32b-41d4-a716-664400445500",
                   "artistName": "Daft Punk",
@@ -193,7 +210,7 @@ version: v1
           200:
             body:
               application/json:
-                example: |
+                example: | 
                   [
                     {
                       "albumId": "183100e3-0e2b-4404-a716-66104d440550",
@@ -238,7 +255,7 @@ version: v1
   post:
     description: Add a new Artist to Jukebox
 /albums:
-  description: Collection of albums existing in Jukebox
+  description: Collection of albums existing in Jukebox 
   get:
     description: Get the list of albums
     queryParameters:
@@ -286,7 +303,7 @@ version: v1
                   }
                 }
               ]
-
+          
   /{albumId}:
     description: Album Entity
     get:
@@ -295,7 +312,7 @@ version: v1
         200:
           body:
             application/json:
-              example: |
+              example: | 
                 {
                   "albumId": "183100e3-0e2b-4404-a716-66104d440550",
                   "albumName": "Random Access Memories",
