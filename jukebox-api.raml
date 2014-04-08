@@ -4,8 +4,6 @@ title: Jukebox API
 baseUri: http://jukebox.api.com
 version: v1
 
-
-
 schemas:
  - song: |
     {
@@ -159,12 +157,11 @@ resourceTypes:
       exampleItem: !include jukebox-include-song-new.sample
   get:
     queryParameters:
-      songTitle:
-        description: "The title of the song to search (it is case insensitive and doesn't need to match the whole title)"
-        required: true
-        minLength: 3
-        type: string
-        example: "Get L"
+        query:
+          description: |
+            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] with valid searchable fields: songTitle
+          example: |
+            ["songTitle", "Get L", "like"]
   /{songId}:
     type:
       collection-item:
@@ -203,13 +200,11 @@ resourceTypes:
       exampleItem: !include jukebox-include-artist-new.sample
   get:
     queryParameters:
-      countryCode:
-        description: "The code of the country used to filter the artists list"
-        example: "FRA"
-        type: string
-        maxLength: 3
-        minLength: 3
-        required: false
+        query:
+          description: |
+            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] with valid searchable fields: countryCode
+          example: |
+            ["countryCode", "FRA", "equals"]
   /{artistId}:
     type:
       collection-item:
@@ -228,13 +223,11 @@ resourceTypes:
       exampleItem: !include jukebox-include-album-new.sample
   get:
     queryParameters:
-      countryCode:
-        description: "The code of the genre used to filter the albums list"
-        example: "ELE"
-        type: string
-        maxLength: 3
-        minLength: 3
-        required: false
+        query:
+          description: |
+            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] with valid searchable fields: genreCode
+          example: |
+            ["genreCode", "ELE\", "like"]
   /{albumId}:
     type:
       collection-item:
