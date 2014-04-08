@@ -5,91 +5,10 @@ baseUri: http://jukebox.api.com
 version: v1
 
 schemas:
- - song: |
-    {
-      "type": "object",
-      "$schema": "http://json-schema.org/draft-03/schema",
-      "id": "http://jsonschema.net",
-      "required": true,
-      "properties": {
-        "songId": {
-          "type": "string",
-          "required": true,
-          "minLength": 36,
-          "maxLength": 36
-        },
-        "songTitle": {
-          "type": "string",
-          "required": true
-        },
-        "albumId": {
-          "type": "string",
-          "required": true,
-          "minLength": 36,
-          "maxLength": 36
-        }
-      }
-    }
+ - song: !include jukebox-include-song.schema
+ - artist: !include jukebox-include-artist.schema
+ - album: !include jukebox-include-album.schema
 
- - artist: |
-    {
-      "type": "object",
-      "$schema": "http://json-schema.org/draft-03/schema",
-      "id": "http://jsonschema.net",
-      "required":false,
-      "properties": {
-        "artistName": {
-          "type": "string",
-          "required":true
-        },
-        "description": {
-          "type": "string",
-          "required": false
-        },
-        "imageURL": {
-          "type": "string",
-          "required": false
-        }
-      }
-    }
-
- - album: |
-    {
-      "type": "object",
-      "$schema": "http://json-schema.org/draft-03/schema",
-      "id": "http://jsonschema.net",
-      "required":false,
-      "properties": {
-        "albumId": {
-          "type": "string",
-          "required":true,
-          "minLength": 36,
-          "maxLength": 36
-        },
-        "albumName": {
-          "type": "string",
-          "required": true
-        },
-        "year": {
-          "type": "string",
-          "required": false
-        },
-        "iamgeURL": {
-          "type": "string",
-          "required": false
-        },
-        "genreCode": {
-          "type": "string",
-          "required": true
-        },
-        "artistId": {
-          "type": "string",
-          "required":true,
-          "minLength": 36,
-          "maxLength": 36
-        }
-      }
-    }
 
 resourceTypes:
   - readOnlyCollection:
