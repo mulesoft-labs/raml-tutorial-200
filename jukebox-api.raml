@@ -32,7 +32,7 @@ resourceTypes:
                 example: |
                   <<exampleCollection>>
       post:
-        description: | 
+        description: |
           Add a new <<resourcePathName|!singularize>> to Jukebox.
         queryParameters:
           access_token:
@@ -165,7 +165,7 @@ traits:
       type:
         readOnlyCollection:
           exampleCollection: !include jukebox-include-artist-albums.sample
-      description: Collection of albulms belonging to the artist
+      description: Collection of albums belonging to the artist
       get:
         description: Get a specific artist's albums list
         is: [orderable: {fieldsList: "albumName"}, pageable]
